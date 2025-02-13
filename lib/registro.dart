@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'principal.dart';
 
-class RegistroPage extends StatelessWidget {
+class RegistroPage extends StatefulWidget {
   const RegistroPage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _RegistroPageState createState() => _RegistroPageState();
+}
+
+class _RegistroPageState extends State<RegistroPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  void _register() {
+    if (_nameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PrincipalPage()),
+      );
+    } else {
+      // Mostrar un mensaje de error o alerta
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, complete todos los campos')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +45,7 @@ class RegistroPage extends StatelessWidget {
           children: <Widget>[
             // Campo de texto para el nombre
             TextField(
+              controller: _nameController,
               decoration: const InputDecoration(
                 labelText: 'Nombre',
                 border: OutlineInputBorder(
@@ -28,6 +57,7 @@ class RegistroPage extends StatelessWidget {
             const SizedBox(height: 20),
             // Campo de texto para el correo
             TextField(
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Correo',
                 border: OutlineInputBorder(
@@ -39,6 +69,7 @@ class RegistroPage extends StatelessWidget {
             const SizedBox(height: 20),
             // Campo de texto para la contraseña
             TextField(
+              controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Contraseña',
                 border: OutlineInputBorder(
@@ -97,9 +128,7 @@ class RegistroPage extends StatelessWidget {
             const SizedBox(height: 20),
             // Botón para aceptar el registro
             ElevatedButton(
-              onPressed: () {
-                // Lógica para completar el registro
-              },
+              onPressed: _register,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
