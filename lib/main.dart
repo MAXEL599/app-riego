@@ -82,14 +82,23 @@ class _LoginPageState extends State<LoginPage> {
             // Campo de texto para el nombre de usuario
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(labelText: 'Username'),
+              decoration: const InputDecoration(
+                labelText: 'Usuario',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                ),
+              ),
               style: const TextStyle(fontFamily: 'Arial', fontSize: 16),
             ),
+            const SizedBox(height: 20),
             // Campo de texto para la contraseña
             TextField(
               controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
                     _isPasswordVisible
@@ -107,39 +116,45 @@ class _LoginPageState extends State<LoginPage> {
               style: const TextStyle(fontFamily: 'Arial', fontSize: 16),
             ),
             const SizedBox(height: 20),
+            // Checkbox para recordar el nombre de usuario
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    // Checkbox para recordar el nombre de usuario
-                    Checkbox(
-                      value: _rememberUsername,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _rememberUsername = value ?? false;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Remember Username',
-                      style: TextStyle(fontFamily: 'Arial', fontSize: 16),
-                    ),
-                  ],
+                Checkbox(
+                  value: _rememberUsername,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      _rememberUsername = value ?? false;
+                    });
+                  },
                 ),
-                // Botón para registrarse
+                const Text(
+                  'Recordar Usuario',
+                  style: TextStyle(fontFamily: 'Arial', fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            // Botones para registrarse y aceptar (iniciar sesión)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
                 ElevatedButton(
                   onPressed: _register,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue, // Color del botón de registro
+                  ),
                   child: const Text(
-                    'Register',
+                    'Registrar',
                     style: TextStyle(fontFamily: 'Arial', fontSize: 16),
                   ),
                 ),
-                // Botón para aceptar (iniciar sesión)
                 ElevatedButton(
                   onPressed: _isButtonDisabled ? null : _login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // Color del botón de aceptar
+                  ),
                   child: const Text(
-                    'Accept',
+                    'Aceptar',
                     style: TextStyle(fontFamily: 'Arial', fontSize: 16),
                   ),
                 ),
