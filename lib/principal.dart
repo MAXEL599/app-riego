@@ -54,56 +54,66 @@ class _PrincipalPageState extends State<PrincipalPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Principal Page'),
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: (String value) {
-              switch (value) {
-                case 'Perfil de Usuario':
-                  // Lógica para perfil de usuario
-                  break;
-                case 'Conectar Arduino':
-                  _connectToArduino();
-                  break;
-                case 'Manual':
-                  // Lógica para abrir el apartado de manual
-                  break;
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return {'Perfil de Usuario', 'Conectar Arduino', 'Manual'}
-                  .map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-          Switch(
-            value: _isDarkMode,
-            onChanged: _toggleTheme,
-            activeColor: Colors.white,
-          ),
-        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('Welcome to the Principal Page!'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _isConnected ? _goToConfiguracion : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-              ),
-              child: const Text(
-                'Ir a Configuración',
-                style: TextStyle(fontFamily: 'Arial', fontSize: 16),
+      body: Column(
+        children: <Widget>[
+          // Menú visible en la ventana principal
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para perfil de usuario
+                  },
+                  child: const Text('Perfil de Usuario'),
+                ),
+                ElevatedButton(
+                  onPressed: _connectToArduino,
+                  child: const Text('Conectar Arduino'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Lógica para abrir el apartado de manual
+                  },
+                  child: const Text('Manual'),
+                ),
+                Row(
+                  children: <Widget>[
+                    const Text('Modo Oscuro'),
+                    Switch(
+                      value: _isDarkMode,
+                      onChanged: _toggleTheme,
+                      activeColor: Colors.white,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('Welcome to the Principal Page!'),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _isConnected ? _goToConfiguracion : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: const Text(
+                      'Ir a Configuración',
+                      style: TextStyle(fontFamily: 'Arial', fontSize: 16),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
